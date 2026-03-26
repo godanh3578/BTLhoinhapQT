@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <div class="oe_read_only" style="font-size:25px">Lịch sử công tác</div>
+                        <div class="oe_read_only" style="font-size:25px">Lịch sử điều chuyển công tác</div>
                         <group col="4" string="Thông tin chung">
 
                             <field name="nhan_vien_id" />
@@ -15,6 +15,7 @@
                             <field name="chuc_vu_id" />
                             <field name="time_start" />
                             <field name="time_end" />
+                            <field name="ghi_chu" />
 
                         </group>
                     </sheet>
@@ -32,6 +33,7 @@
                     <field name="chuc_vu_id" />
                     <field name="time_start" />
                     <field name="time_end" />
+                    <field name="ghi_chu" />
 
                 </tree>
             </field>
@@ -54,7 +56,7 @@
         </record>
 
         <record id="action_lich_su_cong_tac" model="ir.actions.act_window">
-            <field name="name">Lịch sử công tác</field>
+            <field name="name">Lịch sử điều chuyển công tác</field>
             <field name="res_model">lich_su_cong_tac</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="lich_su_cong_tac_search" />

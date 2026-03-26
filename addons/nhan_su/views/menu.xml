@@ -3,7 +3,7 @@
     <data>
         <menuitem
             id="menu_root"
-            name="QLNS"
+            name="Nhân sự"
             sequence="0"/>
           
         <menuitem name="Quản lý nhân viên" 
@@ -12,23 +12,28 @@
             sequence="1"
             action="action_nhan_vien"
         />
-        <menuitem name="Quản lý phòng ban" 
-            id="menu_phong_ban" 
+        <menuitem name="Điều chuyển công tác" 
+            id="menu_lich_su_cong_tac" 
             parent="menu_root" 
+            sequence="2"
+            action="action_lich_su_cong_tac"
+        />
+        <menuitem name="Cấu hình" 
+            id="menu_nhan_su_cau_hinh" 
+            parent="menu_root" 
+            sequence="3"
+        />
+        <menuitem name="Phòng ban" 
+            id="menu_phong_ban" 
+            parent="menu_nhan_su_cau_hinh" 
             sequence="1"
             action="action_phong_ban"
         />
-         <menuitem name="Quản lý chức vụ" 
+         <menuitem name="Chức vụ" 
             id="menu_chuc_vu" 
-            parent="menu_root" 
-            sequence="1"
+            parent="menu_nhan_su_cau_hinh" 
+            sequence="2"
             action="action_chuc_vu"
-        />
-         <menuitem name="Lịch sử công tác" 
-            id="menu_lich_su_cong_tac" 
-            parent="menu_root" 
-            sequence="1"
-            action="action_lich_su_cong_tac"
         />
     </data>
 </odoo>

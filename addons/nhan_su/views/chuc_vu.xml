@@ -7,11 +7,19 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <div class="oe_read_only" style="font-size:25px">Phòng ban</div>
-                        <group col="4" string="Thông tin chung">
-                            <field name="ma_chuc_vu"/>
-                            <field name="ten_chuc_vu"/>
-                
+                        <div class="oe_read_only" style="font-size:25px">Chức vụ</div>
+                        <group>
+                            <group string="Thông tin chung">
+                                <field name="ma_chuc_vu"/>
+                                <field name="ten_chuc_vu"/>
+                                <field name="vai_tro_he_thong"/>
+                            </group>
+                            <group string="Quyền nghiệp vụ ERP">
+                                <field name="duoc_tao_giao_dich_tai_chinh"/>
+                                <field name="duoc_phe_duyet_tai_chinh"/>
+                                <field name="han_muc_phe_duyet_tai_chinh" attrs="{'invisible': [('duoc_phe_duyet_tai_chinh', '=', False)]}"/>
+                                <field name="duoc_ghi_so_ke_toan"/>
+                            </group>
                         </group>
                     </sheet>
                 </form>
@@ -23,8 +31,12 @@
             <field name="model">chuc_vu</field>
             <field name="arch" type="xml">
                 <tree>
-               <field name="ma_chuc_vu"/>
-                            <field name="ten_chuc_vu"/>
+                    <field name="ma_chuc_vu"/>
+                    <field name="ten_chuc_vu"/>
+                    <field name="vai_tro_he_thong"/>
+                    <field name="duoc_tao_giao_dich_tai_chinh"/>
+                    <field name="duoc_phe_duyet_tai_chinh"/>
+                    <field name="duoc_ghi_so_ke_toan"/>
                 </tree>
             </field>
         </record>
@@ -33,8 +45,11 @@
             <field name="model">chuc_vu</field>
             <field name="arch" type="xml">
                 <search>
-               <field name="ma_chuc_vu"/>
-                            <field name="ten_chuc_vu"/>
+                    <field name="ma_chuc_vu"/>
+                    <field name="ten_chuc_vu"/>
+                    <field name="vai_tro_he_thong"/>
+                    <filter string="Có quyền duyệt tài chính" name="finance_approver" domain="[('duoc_phe_duyet_tai_chinh', '=', True)]"/>
+                    <filter string="Có quyền ghi sổ" name="accountant" domain="[('duoc_ghi_so_ke_toan', '=', True)]"/>
                 </search>
             </field>
         </record>

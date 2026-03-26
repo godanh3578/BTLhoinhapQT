@@ -118,11 +118,17 @@ class PhanBoTaiSan(models.Model):
                 if record.nhan_vien_su_dung_id.phong_ban_hien_tai_id != record.phong_ban_id:
                     raise ValidationError('Nhân viên sử dụng phải thuộc đúng phòng ban được phân bổ tài sản.')
 
-                lich_su_hop_le = self.env['lich_su_cong_tac'].search_count([
-                    ('nhan_vien_id', '=', record.nhan_vien_su_dung_id.id),
-                    ('phong_ban_id', '=', record.phong_ban_id.id),
-                    ('time_start', '<=', record.ngay_phat),
-                    ('time_end', '>=', record.ngay_phat),
-                ])
-                if not lich_su_hop_le:
-                    raise ValidationError('Không tìm thấy lịch sử công tác hợp lệ của nhân viên tại phòng ban vào ngày phân bổ.')
+                lich_su_model = self.env.get('lich_su_cong_tac')
+                if lich_su_model:
+                    lich_su_hop_le = lich_su_model.search_count([
+                        ('nhan_vien_id', '=', record.nhan_vien_su_dung_id.id),
+                        ('phong_ban_id', '=', record.phong_ban_id.id),
+                        ('time_start', '<=', record.ngay_phat),
+                        '|',
+                        ('time_end', '=', False),
+                        ('time_end', '>=', record.ngay_phat),
+                    ])
+                    if record.nhan_vien_su_dung_id.lich_su_cong_tac_ids and not lich_su_hop_le:
+                        raise ValidationError(
+                            'Lịch sử điều chuyển của nhân viên không khớp với phòng ban tại ngày phân bổ tài sản.'
+                        )

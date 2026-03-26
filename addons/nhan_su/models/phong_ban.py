@@ -5,6 +5,9 @@ class PhongBan(models.Model):
     _name = 'phong_ban'
     _description = 'Bảng chứa thông tin nhân viên'
     _rec_name = 'ten_phong_ban'
+    _sql_constraints = [
+        ('ma_phong_ban_unique', 'unique(ma_phong_ban)', 'Mã phòng ban đã tồn tại.'),
+    ]
 
     ma_phong_ban = fields.Char("Mã phòng ban", required=True)
     ten_phong_ban = fields.Char("Tên phòng ban", required=True) 

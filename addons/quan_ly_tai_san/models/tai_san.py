@@ -231,7 +231,7 @@ class TaiSan(models.Model):
                 'ghi_chu': f'Khấu hao tự động kỳ {period_label}',
                 'but_toan_id': but_toan.id,
             })
-    
+
     def action_tinh_khau_hao(self):
         self._perform_monthly_depreciation(raise_if_exists=True)
         return True
