@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
@@ -84,3 +85,6 @@ Phiên bản hiện tại đã bổ sung các trigger tự động hóa để đ
 - Trigger theo sự kiện cấp phát: khi cấp phát lại một tài sản, hệ thống tự động đóng phân bổ cũ đang hoạt động của tài sản đó.
 - Trigger theo sự kiện HRM: khi nhân sự được điều chuyển phòng ban trong `lich_su_cong_tac`, hệ thống tự động thu hồi các phân bổ tài sản không còn hợp lệ với phòng ban mới.
     
+=======
+# BTLhoinhapQT
+>>>>>>> be712b214be3e29aba172a310c2d0bd4a8da24e5
