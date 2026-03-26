@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_finance_integration_settings_tree" model="ir.ui.view">
+            <field name="name">finance.integration.settings.tree</field>
+            <field name="model">finance.integration.settings</field>
+            <field name="arch" type="xml">
+                <tree string="Cấu hình AI và API">
+                    <field name="company_id"/>
+                    <field name="ai_enabled"/>
+                    <field name="ai_provider"/>
+                    <field name="ai_model"/>
+                    <field name="telegram_enabled"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_finance_integration_settings_form" model="ir.ui.view">
+            <field name="name">finance.integration.settings.form</field>
+            <field name="model">finance.integration.settings</field>
+            <field name="arch" type="xml">
+                <form string="Cấu hình AI và API ngoài">
+                    <sheet>
+                        <div class="o_form_title">
+                            <h1><field name="display_name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="AI/LLM">
+                                <field name="company_id"/>
+                                <field name="ai_enabled"/>
+                                <field name="ai_provider" attrs="{'readonly': [('ai_enabled', '=', False)]}"/>
+                                <field name="ai_model" attrs="{'readonly': [('ai_enabled', '=', False)]}"/>
+                                <field name="ai_api_key" password="True" attrs="{'readonly': [('ai_enabled', '=', False)]}"/>
+                                <field name="ai_endpoint" placeholder="Để trống nếu dùng endpoint mặc định" attrs="{'readonly': [('ai_enabled', '=', False)]}"/>
+                            </group>
+                            <group string="Telegram">
+                                <field name="telegram_enabled"/>
+                                <field name="telegram_bot_token" password="True" attrs="{'readonly': [('telegram_enabled', '=', False)]}"/>
+                                <field name="telegram_chat_id" attrs="{'readonly': [('telegram_enabled', '=', False)]}"/>
+                                <field name="telegram_notify_on_approval" attrs="{'readonly': [('telegram_enabled', '=', False)]}"/>
+                                <field name="telegram_notify_on_document" attrs="{'readonly': [('telegram_enabled', '=', False)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_finance_integration_settings" model="ir.actions.act_window">
+            <field name="name">Cấu hình AI và API</field>
+            <field name="res_model">finance.integration.settings</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

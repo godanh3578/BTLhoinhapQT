@@ -16,6 +16,22 @@ class NguonKinhPhi(models.Model):
         ('other', 'Khác'),
     ], string='Loại nguồn', default='company', required=True)
     ghi_chu = fields.Text('Ghi chú')
+    purchase_journal_id = fields.Many2one(
+        'account.journal',
+        string='Sổ nhật ký mua tài sản',
+        domain="[('type', '=', 'general')]",
+        ondelete='restrict',
+    )
+    clearing_account_id = fields.Many2one(
+        'account.account',
+        string='Tài khoản đối ứng nguồn vốn',
+        ondelete='restrict',
+    )
+    expense_account_id = fields.Many2one(
+        'account.account',
+        string='Tài khoản chi phí không hình thành tài sản',
+        ondelete='restrict',
+    )
     trang_thai = fields.Selection([
         ('active', 'Đang sử dụng'),
         ('inactive', 'Ngừng sử dụng'),

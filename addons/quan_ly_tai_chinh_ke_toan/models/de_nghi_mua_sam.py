@@ -1,5 +1,10 @@
+import logging
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+
+
+_logger = logging.getLogger(__name__)
 
 
 class DeNghiMuaSam(models.Model):
@@ -32,6 +37,14 @@ class DeNghiMuaSam(models.Model):
     tai_san_ids = fields.One2many('tai_san', 'de_nghi_mua_sam_id', string='Tài sản hình thành')
     so_chung_tu = fields.Integer('Số chứng từ', compute='_compute_counts')
     so_tai_san = fields.Integer('Số tài sản', compute='_compute_counts')
+    ai_phan_tich = fields.Text('Phân tích AI', readonly=True)
+    ai_trang_thai = fields.Selection([
+        ('not_run', 'Chưa chạy'),
+        ('done', 'Đã phân tích'),
+        ('error', 'Lỗi'),
+    ], string='Trạng thái AI', default='not_run', required=True, readonly=True)
+    ai_last_run = fields.Datetime('Lần chạy AI gần nhất', readonly=True)
+    ai_last_error = fields.Text('Lỗi AI gần nhất', readonly=True)
 
     @api.depends('line_ids.thanh_tien_du_kien')
     def _compute_du_toan(self):
@@ -88,6 +101,7 @@ class DeNghiMuaSam(models.Model):
     def action_approve(self):
         self.write({'trang_thai': 'approved'})
         self._create_approval_log('approved')
+        self._send_telegram_notifications('approved')
 
     def action_mark_purchased(self):
         self.write({'trang_thai': 'purchased'})
@@ -95,11 +109,63 @@ class DeNghiMuaSam(models.Model):
     def action_done(self):
         self.write({'trang_thai': 'done'})
 
+    def action_generate_ai_analysis(self):
+        for record in self:
+            try:
+                analysis = record._get_integration_settings().generate_purchase_request_analysis(record)
+                record.write({
+                    'ai_phan_tich': analysis,
+                    'ai_trang_thai': 'done',
+                    'ai_last_run': fields.Datetime.now(),
+                    'ai_last_error': False,
+                })
+            except ValidationError as error:
+                record.write({
+                    'ai_trang_thai': 'error',
+                    'ai_last_run': fields.Datetime.now(),
+                    'ai_last_error': str(error),
+                })
+                raise
+        return True
+
     def action_cancel(self):
         self.write({'trang_thai': 'cancel'})
 
     def action_reset_draft(self):
         self.write({'trang_thai': 'draft'})
+
+    def _get_integration_settings(self):
+        self.ensure_one()
+        return self.env['finance.integration.settings'].sudo().get_company_settings(self.env.company)
+
+    def _build_telegram_message(self, event_code):
+        self.ensure_one()
+        event_labels = {
+            'approved': 'Đề nghị mua sắm đã được phê duyệt',
+            'document_posted': 'Chứng từ mua tài sản đã được ghi nhận',
+        }
+        line_summary = '\n'.join(
+            f"- {line.ten_hang_muc}: SL {line.so_luong}, dự toán {line.thanh_tien_du_kien:,.0f}"
+            for line in self.line_ids
+        ) or '- Không có hạng mục'
+        return (
+            f"{event_labels.get(event_code, 'Cập nhật nghiệp vụ')}\n"
+            f"Số đề nghị: {self.so_de_nghi}\n"
+            f"Người đề nghị: {self.nguoi_de_nghi_id.ho_ten}\n"
+            f"Phòng ban: {self.phong_ban_id.ten_phong_ban}\n"
+            f"Ngân sách: {self.ngan_sach_id.ten_ngan_sach if self.ngan_sach_id else 'Chưa chọn'}\n"
+            f"Nguồn kinh phí: {self.nguon_kinh_phi_id.ten_nguon if self.nguon_kinh_phi_id else 'Chưa chọn'}\n"
+            f"Dự toán: {self.du_toan_chi_phi:,.0f} {self.currency_id.name}\n"
+            f"Hạng mục:\n{line_summary}"
+        )
+
+    def _send_telegram_notifications(self, event_code):
+        for record in self:
+            try:
+                settings = record._get_integration_settings()
+                settings.send_telegram_message(record._build_telegram_message(event_code), event_code)
+            except ValidationError as error:
+                _logger.warning('Không thể gửi Telegram cho đề nghị %s: %s', record.so_de_nghi, error)
 
     def action_view_chung_tu(self):
         self.ensure_one()

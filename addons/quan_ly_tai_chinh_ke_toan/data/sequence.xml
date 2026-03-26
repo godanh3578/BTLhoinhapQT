@@ -25,5 +25,11 @@
             <field name="prefix">CTTS/%(year)s/</field>
             <field name="padding">4</field>
         </record>
+        <record id="seq_tai_san_auto" model="ir.sequence">
+            <field name="name">Tài sản tự động</field>
+            <field name="code">tai_san_auto</field>
+            <field name="prefix">TSAUTO/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>

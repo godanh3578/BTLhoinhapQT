@@ -5,3 +5,4 @@ access_de_nghi_mua_sam_user,de_nghi_mua_sam.user,model_de_nghi_mua_sam,base.grou
 access_de_nghi_mua_sam_line_user,de_nghi_mua_sam_line.user,model_de_nghi_mua_sam_line,base.group_user,1,1,1,1
 access_chung_tu_mua_tai_san_user,chung_tu_mua_tai_san.user,model_chung_tu_mua_tai_san,base.group_user,1,1,1,1
 access_phe_duyet_nghiep_vu_user,phe_duyet_nghiep_vu.user,model_phe_duyet_nghiep_vu,base.group_user,1,1,1,1
+access_finance_integration_settings_admin,finance_integration_settings.admin,model_finance_integration_settings,base.group_system,1,1,1,1

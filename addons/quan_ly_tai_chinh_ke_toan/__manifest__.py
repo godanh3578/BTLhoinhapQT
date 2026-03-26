@@ -14,6 +14,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/sequence.xml',
+        'views/finance_integration_settings_views.xml',
         'views/ngan_sach_mua_sam_views.xml',
         'views/nguon_kinh_phi_views.xml',
         'views/de_nghi_mua_sam_views.xml',
@@ -27,5 +28,4 @@
             'quan_ly_tai_chinh_ke_toan/static/src/scss/finance_backend.scss',
         ],
     },
-    'demo': [],
 }

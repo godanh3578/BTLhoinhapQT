@@ -71,50 +71,52 @@ Giá trị tích hợp:
 - Truy vết được tài sản đang do ai sử dụng và thuộc phòng ban nào.
 - Dòng tiền chi phí khấu hao được phản ánh tự động trong kế toán.
 
-## 4. Audit code hiện trạng
+## 4. Hiện trạng triển khai
 
-Phần đã có:
+Phạm vi đã triển khai:
 
 - Đã có hai module tùy biến `nhan_su` và `quan_ly_tai_san`.
 - `quan_ly_tai_san` đã phụ thuộc trực tiếp vào `account` và `nhan_su`.
 - Đã có lịch `cron` tính khấu hao hàng tháng.
 - Đã có cấu hình tài khoản kế toán trên loại tài sản.
 - Đã có ràng buộc kiểm tra nhân viên phải thuộc đúng phòng ban khi nhận tài sản.
+- Đã có module `quan_ly_tai_chinh_ke_toan` cho ngân sách, nguồn vốn, đề nghị mua sắm và chứng từ.
+- Đã có AI phân tích đề nghị mua sắm và tích hợp Telegram để gửi thông báo nghiệp vụ.
 
-Tồn tại phát hiện trong audit:
+Điều kiện cần chuẩn bị khi triển khai và bảo vệ:
 
-- Giá trị tài sản bị trừ hai lần khi khấu hao tự động: một lần trong `lich_su_khau_hao.create()` và một lần trong `tai_san._perform_monthly_depreciation()`.
-- Ngày khấu hao trong lịch sử đang lưu theo thời điểm hệ thống chạy thay vì kỳ khấu hao được chọn.
-- README chưa có mô tả rõ luồng end-to-end và các module tham gia như yêu cầu nộp bài.
-- Chưa có bộ tài liệu nộp kèm gồm business flow và poster.
+- Cần cấu hình đầy đủ journal, tài khoản nguồn vốn và API key trước khi vận hành các tính năng mới.
+- Cần chuẩn bị tài khoản OpenAI hoặc Gemini và bot Telegram thật để chứng minh mức 3 khi bảo vệ.
+- Poster và business flow đã được chuẩn hóa theo tên nhóm `Nhom6`.
 
-## 5. Gap analysis
+## 5. Khoảng cần hoàn thiện
 
-Phần kế thừa được:
+Phần đã hoàn thành:
 
 - Dữ liệu nhân sự gốc.
 - Quản lý danh mục, hồ sơ và phân bổ tài sản.
 - Tự động tạo bút toán khấu hao hàng tháng.
 
-Phần cần hoàn thiện thêm:
+Phần cần hoàn thiện thêm ngoài mã nguồn:
 
-- Chuẩn hóa luồng khấu hao để dữ liệu tài sản và sổ cái luôn nhất quán.
-- Bổ sung tài liệu nghiệp vụ trước khi lập trình và artifact để nộp GitHub.
-- Tăng mức minh bạch bằng cách mô tả rõ luồng tích hợp HRM - Tài sản - Kế toán trong README.
+- Chuẩn hóa cấu hình triển khai để AI và Telegram chạy ổn định trên môi trường bảo vệ.
+- Hoàn thiện artifact nộp bài bằng cách đổi tên poster, business flow, bổ sung video giới thiệu.
 
 ## 6. Phương án triển khai
 
-- Sửa lỗi khấu hao bị ghi nhận trùng trên model tài sản.
 - Giữ `nhan_su` là nguồn master data cho nhân viên/phòng ban.
 - Duy trì `cron` khấu hao hàng tháng như tác vụ tự động hóa mức 2.
 - Bổ sung trigger tự động đóng phân bổ cũ khi tài sản được cấp phát lại.
 - Bổ sung trigger tự động thu hồi phân bổ tài sản không còn hợp lệ khi HR điều chuyển nhân sự sang phòng ban mới.
+- Bổ sung tự động tạo bút toán mua tài sản và tự động hình thành tài sản từ chứng từ mua sắm.
+- Bổ sung AI phân tích đề nghị mua sắm và Telegram notification như năng lực mức 3.
 - Bổ sung tài liệu phân tích nghiệp vụ, ảnh business flow và poster giới thiệu hệ thống.
 
 ## 7. Mức độ đáp ứng theo rubric
 
 - Mức 1: đạt yêu cầu tích hợp hệ thống vì ba module dùng chung cơ sở dữ liệu và HRM là dữ liệu gốc.
-- Mức 2: đạt yêu cầu tự động hóa ở cả hai nhóm trigger sau:
+- Mức 2: đạt yêu cầu tự động hóa ở cả trigger theo lịch lẫn trigger theo sự kiện và tự động hóa tài chính.
 - Trigger theo lịch: `cron` khấu hao hàng tháng tự động tạo lịch sử khấu hao và bút toán kế toán.
 - Trigger theo sự kiện: khi tài sản được cấp phát lại, hệ thống tự động đóng phân bổ cũ; khi HR điều chuyển nhân sự sang phòng ban mới, hệ thống tự động thu hồi các phân bổ tài sản không còn hợp lệ.
-- Mức 3: chưa triển khai AI/API trong bản này; có thể mở rộng bằng OCR hóa đơn mua tài sản hoặc gửi thông báo Telegram/Zalo khi tài sản đến kỳ bảo trì/khấu hao.
+- Trigger theo quy trình tài chính: khi chứng từ mua tài sản được ghi nhận, hệ thống tự động tạo bút toán kế toán và sinh tài sản từ các hạng mục hợp lệ.
+- Mức 3: đã triển khai AI/LLM để phân tích đề nghị mua sắm và External API Telegram để gửi thông báo phê duyệt, ghi nhận chứng từ.

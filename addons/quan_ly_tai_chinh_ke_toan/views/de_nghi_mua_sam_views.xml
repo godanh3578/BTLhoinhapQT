@@ -54,6 +54,7 @@
                 <form string="Đề nghị mua sắm">
                     <header>
                         <button name="action_submit" type="object" string="Gửi duyệt" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                        <button name="action_generate_ai_analysis" type="object" string="Phân tích AI" attrs="{'invisible': [('id', '=', False)]}"/>
                         <button name="action_finance_review" type="object" string="Tài chính kiểm tra" attrs="{'invisible': [('trang_thai', '!=', 'submitted')]}"/>
                         <button name="action_approve" type="object" string="Phê duyệt" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'finance_review')]}"/>
                         <button name="action_mark_purchased" type="object" string="Đánh dấu đã mua" attrs="{'invisible': [('trang_thai', '!=', 'approved')]}"/>
@@ -70,6 +71,7 @@
                             <button name="action_view_tai_san" type="object" class="oe_stat_button" icon="fa-cubes">
                                 <field name="so_tai_san" widget="statinfo" string="Tài sản"/>
                             </button>
+                            <button type="object" name="action_generate_ai_analysis" class="oe_stat_button" icon="fa-magic" string="Phân tích AI"/>
                         </div>
                         <div class="o_form_title">
                             <h1><field name="so_de_nghi" readonly="1"/></h1>
@@ -136,6 +138,18 @@
                                         <field name="trang_thai_tai_san"/>
                                     </tree>
                                 </field>
+                            </page>
+                            <page string="Phân tích AI">
+                                <group>
+                                    <group string="Kết quả AI">
+                                        <field name="ai_trang_thai" readonly="1"/>
+                                        <field name="ai_last_run" readonly="1"/>
+                                    </group>
+                                    <group string="Lỗi gần nhất">
+                                        <field name="ai_last_error" readonly="1" nolabel="1" placeholder="Không có lỗi"/>
+                                    </group>
+                                </group>
+                                <field name="ai_phan_tich" readonly="1" nolabel="1" placeholder="Chưa chạy AI cho đề nghị này."/>
                             </page>
                         </notebook>
                     </sheet>
