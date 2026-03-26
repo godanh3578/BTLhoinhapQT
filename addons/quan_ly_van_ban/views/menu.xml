@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+            id="menu_root"
+            name="Quản lý văn bản"
+            sequence="0"/>
+
+        <menuitem name="Văn bản đến"
+            id="menu_van_ban_den"
+            parent="menu_root" 
+            sequence="1"
+            action="action_van_ban_den"
+        />
+    </data>
+</odoo>

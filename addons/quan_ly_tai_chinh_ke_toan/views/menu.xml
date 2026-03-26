@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_root_finance_asset" name="Tài chính kế toán" sequence="20"/>
+
+        <menuitem id="menu_finance_dashboard_budget" name="Ngân sách mua sắm" parent="menu_root_finance_asset" sequence="1" action="action_ngan_sach_mua_sam"/>
+        <menuitem id="menu_finance_funding_source" name="Nguồn kinh phí" parent="menu_root_finance_asset" sequence="2" action="action_nguon_kinh_phi"/>
+        <menuitem id="menu_finance_purchase_request" name="Đề nghị mua sắm" parent="menu_root_finance_asset" sequence="3" action="action_de_nghi_mua_sam"/>
+        <menuitem id="menu_finance_documents" name="Chứng từ mua tài sản" parent="menu_root_finance_asset" sequence="4" action="action_chung_tu_mua_tai_san"/>
+        <menuitem id="menu_finance_approval_log" name="Lịch sử phê duyệt" parent="menu_root_finance_asset" sequence="5" action="action_phe_duyet_nghiep_vu"/>
+    </data>
+</odoo>

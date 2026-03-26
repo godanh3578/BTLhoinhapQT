@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_ngan_sach_mua_sam" model="ir.sequence">
+            <field name="name">Ngân sách mua sắm</field>
+            <field name="code">ngan_sach_mua_sam</field>
+            <field name="prefix">NSMS/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_nguon_kinh_phi" model="ir.sequence">
+            <field name="name">Nguồn kinh phí</field>
+            <field name="code">nguon_kinh_phi</field>
+            <field name="prefix">NKP/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_de_nghi_mua_sam" model="ir.sequence">
+            <field name="name">Đề nghị mua sắm</field>
+            <field name="code">de_nghi_mua_sam</field>
+            <field name="prefix">DNMS/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_chung_tu_mua_tai_san" model="ir.sequence">
+            <field name="name">Chứng từ mua tài sản</field>
+            <field name="code">chung_tu_mua_tai_san</field>
+            <field name="prefix">CTTS/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

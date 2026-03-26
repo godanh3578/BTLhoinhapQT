@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<menuitem id="menu_root" name="Quản lý tài sản" sequence="0" />
+
+    <menuitem name="Tài sản" id="menu_tai_san" parent="menu_root" sequence="1" />
+        <menuitem id="danh_muc_tai_san_menu" name="Loại tài sản" action="danh_muc_tai_san_action" parent="menu_tai_san" sequence="1" />
+    <menuitem id="tai_san_menu" name="Danh mục tài sản cụ thể" action="tai_san_action" parent="menu_tai_san" sequence="2" />
+        <menuitem id="phan_bo_tai_san_menu" name="Phân bổ tài sản" action="phan_bo_tai_san_action" parent="menu_tai_san" sequence="3" />
+
+    <menuitem name="Khấu hao và kế toán" id="menu_khau_hao_ke_toan" parent="menu_root" sequence="2" />
+    <menuitem id="khau_hao_tai_san_menu" name="Lịch sử khấu hao" action="lich_su_khau_hao_action" parent="menu_khau_hao_ke_toan" sequence="1" />
+	</data>
+</odoo>

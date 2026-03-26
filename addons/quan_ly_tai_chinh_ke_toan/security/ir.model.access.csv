@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ngan_sach_mua_sam_user,ngan_sach_mua_sam.user,model_ngan_sach_mua_sam,base.group_user,1,1,1,1
+access_nguon_kinh_phi_user,nguon_kinh_phi.user,model_nguon_kinh_phi,base.group_user,1,1,1,1
+access_de_nghi_mua_sam_user,de_nghi_mua_sam.user,model_de_nghi_mua_sam,base.group_user,1,1,1,1
+access_de_nghi_mua_sam_line_user,de_nghi_mua_sam_line.user,model_de_nghi_mua_sam_line,base.group_user,1,1,1,1
+access_chung_tu_mua_tai_san_user,chung_tu_mua_tai_san.user,model_chung_tu_mua_tai_san,base.group_user,1,1,1,1
+access_phe_duyet_nghiep_vu_user,phe_duyet_nghiep_vu.user,model_phe_duyet_nghiep_vu,base.group_user,1,1,1,1

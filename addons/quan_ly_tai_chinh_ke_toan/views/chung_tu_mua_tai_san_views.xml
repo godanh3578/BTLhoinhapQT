@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_chung_tu_mua_tai_san_kanban" model="ir.ui.view">
+            <field name="name">chung_tu_mua_tai_san.kanban</field>
+            <field name="model">chung_tu_mua_tai_san</field>
+            <field name="arch" type="xml">
+                <kanban class="o_finance_kanban">
+                    <field name="so_chung_tu"/>
+                    <field name="doi_tac"/>
+                    <field name="gia_tri_thanh_toan"/>
+                    <field name="trang_thai"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_finance_card o_finance_document_card">
+                                <div class="o_finance_card__header">
+                                    <strong><field name="so_chung_tu"/></strong>
+                                    <field name="trang_thai" widget="badge"/>
+                                </div>
+                                <div class="o_finance_card__metrics">
+                                    <div><span>Nhà cung cấp</span><strong><field name="doi_tac"/></strong></div>
+                                    <div><span>Thanh toán</span><strong><field name="gia_tri_thanh_toan"/></strong></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_chung_tu_mua_tai_san_tree" model="ir.ui.view">
+            <field name="name">chung_tu_mua_tai_san.tree</field>
+            <field name="model">chung_tu_mua_tai_san</field>
+            <field name="arch" type="xml">
+                <tree string="Chứng từ mua tài sản">
+                    <field name="so_chung_tu"/>
+                    <field name="ngay_chung_tu"/>
+                    <field name="doi_tac"/>
+                    <field name="de_nghi_mua_sam_id"/>
+                    <field name="gia_tri_thanh_toan"/>
+                    <field name="trang_thai"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_chung_tu_mua_tai_san_form" model="ir.ui.view">
+            <field name="name">chung_tu_mua_tai_san.form</field>
+            <field name="model">chung_tu_mua_tai_san</field>
+            <field name="arch" type="xml">
+                <form string="Chứng từ mua tài sản">
+                    <header>
+                        <button name="action_mark_posted" type="object" string="Ghi nhận chứng từ" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                        <button name="action_cancel" type="object" string="Hủy" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="draft,posted,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_tai_san" type="object" class="oe_stat_button" icon="fa-cube">
+                                <field name="so_tai_san" widget="statinfo" string="Tài sản"/>
+                            </button>
+                        </div>
+                        <div class="o_form_title">
+                            <h1><field name="so_chung_tu" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Thông tin chứng từ">
+                                <field name="ngay_chung_tu"/>
+                                <field name="doi_tac"/>
+                                <field name="currency_id"/>
+                                <field name="gia_tri_thanh_toan"/>
+                            </group>
+                            <group string="Liên kết nghiệp vụ">
+                                <field name="de_nghi_mua_sam_id"/>
+                                <field name="account_move_id"/>
+                                <field name="ghi_chu" placeholder="Ghi chú đối soát, số hóa đơn, ghi nhận thanh toán..."/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Tài sản liên kết">
+                                <field name="tai_san_ids" readonly="1">
+                                    <tree>
+                                        <field name="ma_tai_san"/>
+                                        <field name="ten_tai_san"/>
+                                        <field name="ngay_ghi_tang"/>
+                                        <field name="gia_tri_ban_dau"/>
+                                        <field name="gia_tri_hien_tai"/>
+                                        <field name="phong_ban_hien_tai_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_chung_tu_mua_tai_san_search" model="ir.ui.view">
+            <field name="name">chung_tu_mua_tai_san.search</field>
+            <field name="model">chung_tu_mua_tai_san</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="so_chung_tu"/>
+                    <field name="doi_tac"/>
+                    <field name="de_nghi_mua_sam_id"/>
+                    <filter string="Đã ghi nhận" name="posted" domain="[('trang_thai', '=', 'posted')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_chung_tu_mua_tai_san" model="ir.actions.act_window">
+            <field name="name">Chứng từ mua tài sản</field>
+            <field name="res_model">chung_tu_mua_tai_san</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_chung_tu_mua_tai_san_search"/>
+        </record>
+    </data>
+</odoo>

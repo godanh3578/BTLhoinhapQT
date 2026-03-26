@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tai_san_form_inherit_finance" model="ir.ui.view">
+            <field name="name">tai_san.form.inherit.finance</field>
+            <field name="model">tai_san</field>
+            <field name="inherit_id" ref="quan_ly_tai_san.tai_san_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="Liên kết tài chính">
+                        <group>
+                            <group string="Nguồn hình thành tài sản">
+                                <field name="de_nghi_mua_sam_id"/>
+                                <field name="chung_tu_mua_sam_id"/>
+                                <field name="ngay_ghi_tang"/>
+                            </group>
+                            <group string="Thông tin vận hành">
+                                <field name="dia_diem_su_dung"/>
+                                <field name="gia_tri_thu_hoi_uoc_tinh"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tai_san_tree_inherit_finance" model="ir.ui.view">
+            <field name="name">tai_san.tree.inherit.finance</field>
+            <field name="model">tai_san</field>
+            <field name="inherit_id" ref="quan_ly_tai_san.tai_san_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='trang_thai_tai_san']" position="before">
+                    <field name="ngay_ghi_tang"/>
+                    <field name="chung_tu_mua_sam_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

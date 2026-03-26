@@ -1,0 +1,66 @@
+.o_finance_kanban .o_finance_card {
+    border-radius: 16px;
+    border: 1px solid #d6dde8;
+    background: linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+    box-shadow: 0 10px 30px rgba(37, 71, 106, 0.08);
+    padding: 16px;
+}
+
+.o_finance_kanban .o_finance_card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.o_finance_kanban .o_finance_card__header strong {
+    font-size: 15px;
+    color: #17324d;
+}
+
+.o_finance_kanban .o_finance_card__metrics {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.o_finance_kanban .o_finance_card__metrics div {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(22, 119, 255, 0.06);
+}
+
+.o_finance_kanban .o_finance_card__metrics span {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #5d7389;
+    margin-bottom: 4px;
+}
+
+.o_finance_kanban .o_finance_card__metrics strong {
+    color: #0f2740;
+    font-size: 14px;
+}
+
+.o_finance_kanban .o_finance_card__footer {
+    margin-top: 16px;
+}
+
+.o_finance_kanban .o_finance_budget_card {
+    background: linear-gradient(180deg, #ffffff 0%, #f4fbf7 100%);
+}
+
+.o_finance_kanban .o_finance_request_card {
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+}
+
+.o_finance_kanban .o_finance_document_card {
+    background: linear-gradient(180deg, #ffffff 0%, #fff8f2 100%);
+}
+
+.o_finance_kanban .o_finance_source_card {
+    background: linear-gradient(180deg, #ffffff 0%, #f7fcff 100%);
+}

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_nguon_kinh_phi_kanban" model="ir.ui.view">
+            <field name="name">nguon_kinh_phi.kanban</field>
+            <field name="model">nguon_kinh_phi</field>
+            <field name="arch" type="xml">
+                <kanban class="o_finance_kanban">
+                    <field name="ten_nguon"/>
+                    <field name="ma_nguon"/>
+                    <field name="loai_nguon"/>
+                    <field name="trang_thai"/>
+                    <field name="so_de_nghi"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_finance_card o_finance_source_card">
+                                <div class="o_finance_card__header">
+                                    <strong><field name="ten_nguon"/></strong>
+                                    <span class="badge badge-light"><field name="ma_nguon"/></span>
+                                </div>
+                                <div class="o_finance_card__metrics">
+                                    <div><span>Loại nguồn</span><strong><field name="loai_nguon"/></strong></div>
+                                    <div><span>Đề nghị</span><strong><field name="so_de_nghi"/></strong></div>
+                                </div>
+                                <div class="o_finance_card__footer">
+                                    <field name="trang_thai" widget="badge"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_nguon_kinh_phi_tree" model="ir.ui.view">
+            <field name="name">nguon_kinh_phi.tree</field>
+            <field name="model">nguon_kinh_phi</field>
+            <field name="arch" type="xml">
+                <tree string="Nguồn kinh phí">
+                    <field name="ma_nguon"/>
+                    <field name="ten_nguon"/>
+                    <field name="loai_nguon"/>
+                    <field name="so_de_nghi"/>
+                    <field name="trang_thai"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_nguon_kinh_phi_form" model="ir.ui.view">
+            <field name="name">nguon_kinh_phi.form</field>
+            <field name="model">nguon_kinh_phi</field>
+            <field name="arch" type="xml">
+                <form string="Nguồn kinh phí">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_de_nghi" type="object" class="oe_stat_button" icon="fa-list-ul">
+                                <field name="so_de_nghi" widget="statinfo" string="Đề nghị"/>
+                            </button>
+                        </div>
+                        <div class="o_form_title">
+                            <h1><field name="ten_nguon"/></h1>
+                            <div class="text-muted"><field name="ma_nguon" readonly="1"/></div>
+                        </div>
+                        <group>
+                            <group string="Thông tin nguồn">
+                                <field name="loai_nguon"/>
+                                <field name="trang_thai"/>
+                            </group>
+                            <group string="Mô tả">
+                                <field name="ghi_chu" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_nguon_kinh_phi_search" model="ir.ui.view">
+            <field name="name">nguon_kinh_phi.search</field>
+            <field name="model">nguon_kinh_phi</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ma_nguon"/>
+                    <field name="ten_nguon"/>
+                    <field name="loai_nguon"/>
+                    <filter string="Đang sử dụng" name="active" domain="[('trang_thai', '=', 'active')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_nguon_kinh_phi" model="ir.actions.act_window">
+            <field name="name">Nguồn kinh phí</field>
+            <field name="res_model">nguon_kinh_phi</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_nguon_kinh_phi_search"/>
+        </record>
+    </data>
+</odoo>

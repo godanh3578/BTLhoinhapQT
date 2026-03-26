@@ -69,4 +69,18 @@ Ngoài ra có thể thêm mổ số parameters như:
 Người sử dụng truy cập theo đường dẫn _http://localhost:8069/_ để đăng nhập vào hệ thống.
 
 Hoàn tất
+
+## Luồng nghiệp vụ tích hợp HRM - Tài sản - Kế toán
+
+Luồng chính của đề tài Quản lý tài sản + Tài chính/Kế toán + HRM được mô tả tại `docs/business flow/NhomXX_BusinessFlow_QuanLyTaiSanKeToanHRM.png`, trong đó dữ liệu nhân sự từ module `nhan_su` là dữ liệu gốc để phân bổ tài sản, theo dõi người sử dụng và ghi nhận khấu hao vào sổ cái kế toán.
+
+Poster giới thiệu hệ thống được đặt tại `docs/poster/NhomXX_Poster_QuanLyTaiSanKeToanHRM.png`, tóm tắt các module tham gia gồm `nhan_su`, `quan_ly_tai_san` và `account`.
+
+## Mức 2 - Tự động hóa quy trình
+
+Phiên bản hiện tại đã bổ sung các trigger tự động hóa để đáp ứng mức 2:
+
+- Trigger theo lịch: cron hàng tháng tự động tính khấu hao và ghi nhận bút toán vào sổ cái.
+- Trigger theo sự kiện cấp phát: khi cấp phát lại một tài sản, hệ thống tự động đóng phân bổ cũ đang hoạt động của tài sản đó.
+- Trigger theo sự kiện HRM: khi nhân sự được điều chuyển phòng ban trong `lich_su_cong_tac`, hệ thống tự động thu hồi các phân bổ tài sản không còn hợp lệ với phòng ban mới.
     

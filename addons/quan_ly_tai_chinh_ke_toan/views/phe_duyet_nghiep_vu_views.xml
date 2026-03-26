@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_phe_duyet_nghiep_vu_tree" model="ir.ui.view">
+            <field name="name">phe_duyet_nghiep_vu.tree</field>
+            <field name="model">phe_duyet_nghiep_vu</field>
+            <field name="arch" type="xml">
+                <tree string="Lịch sử phê duyệt">
+                    <field name="de_nghi_mua_sam_id"/>
+                    <field name="cap_duyet"/>
+                    <field name="nguoi_duyet_id"/>
+                    <field name="ngay_duyet"/>
+                    <field name="ket_qua"/>
+                    <field name="y_kien"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_phe_duyet_nghiep_vu" model="ir.actions.act_window">
+            <field name="name">Lịch sử phê duyệt</field>
+            <field name="res_model">phe_duyet_nghiep_vu</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

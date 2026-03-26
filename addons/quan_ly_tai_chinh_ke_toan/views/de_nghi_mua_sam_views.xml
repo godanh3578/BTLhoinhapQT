@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_de_nghi_mua_sam_kanban" model="ir.ui.view">
+            <field name="name">de_nghi_mua_sam.kanban</field>
+            <field name="model">de_nghi_mua_sam</field>
+            <field name="arch" type="xml">
+                <kanban class="o_finance_kanban">
+                    <field name="so_de_nghi"/>
+                    <field name="phong_ban_id"/>
+                    <field name="du_toan_chi_phi"/>
+                    <field name="trang_thai"/>
+                    <field name="ngay_de_nghi"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_finance_card o_finance_request_card">
+                                <div class="o_finance_card__header">
+                                    <strong><field name="so_de_nghi"/></strong>
+                                    <field name="trang_thai" widget="badge"/>
+                                </div>
+                                <div class="o_finance_card__metrics">
+                                    <div><span>Ngày đề nghị</span><strong><field name="ngay_de_nghi"/></strong></div>
+                                    <div><span>Phòng ban</span><strong><field name="phong_ban_id"/></strong></div>
+                                    <div><span>Dự toán</span><strong><field name="du_toan_chi_phi"/></strong></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_de_nghi_mua_sam_tree" model="ir.ui.view">
+            <field name="name">de_nghi_mua_sam.tree</field>
+            <field name="model">de_nghi_mua_sam</field>
+            <field name="arch" type="xml">
+                <tree string="Đề nghị mua sắm">
+                    <field name="so_de_nghi"/>
+                    <field name="ngay_de_nghi"/>
+                    <field name="phong_ban_id"/>
+                    <field name="nguoi_de_nghi_id"/>
+                    <field name="ngan_sach_id"/>
+                    <field name="nguon_kinh_phi_id"/>
+                    <field name="du_toan_chi_phi"/>
+                    <field name="trang_thai"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_de_nghi_mua_sam_form" model="ir.ui.view">
+            <field name="name">de_nghi_mua_sam.form</field>
+            <field name="model">de_nghi_mua_sam</field>
+            <field name="arch" type="xml">
+                <form string="Đề nghị mua sắm">
+                    <header>
+                        <button name="action_submit" type="object" string="Gửi duyệt" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                        <button name="action_finance_review" type="object" string="Tài chính kiểm tra" attrs="{'invisible': [('trang_thai', '!=', 'submitted')]}"/>
+                        <button name="action_approve" type="object" string="Phê duyệt" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'finance_review')]}"/>
+                        <button name="action_mark_purchased" type="object" string="Đánh dấu đã mua" attrs="{'invisible': [('trang_thai', '!=', 'approved')]}"/>
+                        <button name="action_done" type="object" string="Hoàn tất" attrs="{'invisible': [('trang_thai', '!=', 'purchased')]}"/>
+                        <button name="action_cancel" type="object" string="Hủy" attrs="{'invisible': [('trang_thai', 'in', ['done', 'cancel'])]}"/>
+                        <button name="action_reset_draft" type="object" string="Về nháp" attrs="{'invisible': [('trang_thai', '!=', 'cancel')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="draft,submitted,finance_review,approved,purchased,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_chung_tu" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <field name="so_chung_tu" widget="statinfo" string="Chứng từ"/>
+                            </button>
+                            <button name="action_view_tai_san" type="object" class="oe_stat_button" icon="fa-cubes">
+                                <field name="so_tai_san" widget="statinfo" string="Tài sản"/>
+                            </button>
+                        </div>
+                        <div class="o_form_title">
+                            <h1><field name="so_de_nghi" readonly="1"/></h1>
+                            <div class="text-muted">Đề nghị mua sắm tài sản doanh nghiệp</div>
+                        </div>
+                        <group>
+                            <group string="Thông tin đề nghị">
+                                <field name="ngay_de_nghi"/>
+                                <field name="nguoi_de_nghi_id"/>
+                                <field name="phong_ban_id"/>
+                                <field name="currency_id"/>
+                                <field name="du_toan_chi_phi" readonly="1"/>
+                            </group>
+                            <group string="Ngân sách và nguồn vốn">
+                                <field name="ngan_sach_id"/>
+                                <field name="nguon_kinh_phi_id"/>
+                                <field name="noi_dung_mua_sam" placeholder="Tóm tắt nhu cầu mua sắm, mục đích sử dụng, phạm vi triển khai..."/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Hạng mục mua sắm">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="ten_hang_muc"/>
+                                        <field name="danh_muc_ts_id"/>
+                                        <field name="so_luong"/>
+                                        <field name="don_gia_du_kien"/>
+                                        <field name="thanh_tien_du_kien" readonly="1"/>
+                                        <field name="co_hinh_thanh_tai_san"/>
+                                        <field name="mo_ta"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Phê duyệt">
+                                <field name="phe_duyet_ids" readonly="1">
+                                    <tree>
+                                        <field name="cap_duyet"/>
+                                        <field name="nguoi_duyet_id"/>
+                                        <field name="ngay_duyet"/>
+                                        <field name="ket_qua"/>
+                                        <field name="y_kien"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Chứng từ mua tài sản">
+                                <field name="chung_tu_ids" readonly="1">
+                                    <tree>
+                                        <field name="so_chung_tu"/>
+                                        <field name="ngay_chung_tu"/>
+                                        <field name="doi_tac"/>
+                                        <field name="gia_tri_thanh_toan"/>
+                                        <field name="trang_thai"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Tài sản hình thành">
+                                <field name="tai_san_ids" readonly="1">
+                                    <tree>
+                                        <field name="ma_tai_san"/>
+                                        <field name="ten_tai_san"/>
+                                        <field name="ngay_ghi_tang"/>
+                                        <field name="gia_tri_ban_dau"/>
+                                        <field name="gia_tri_hien_tai"/>
+                                        <field name="trang_thai_tai_san"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_de_nghi_mua_sam_search" model="ir.ui.view">
+            <field name="name">de_nghi_mua_sam.search</field>
+            <field name="model">de_nghi_mua_sam</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="so_de_nghi"/>
+                    <field name="phong_ban_id"/>
+                    <field name="nguoi_de_nghi_id"/>
+                    <field name="ngan_sach_id"/>
+                    <field name="nguon_kinh_phi_id"/>
+                    <filter string="Chờ duyệt" name="submitted" domain="[('trang_thai', '=', 'submitted')]"/>
+                    <filter string="Tài chính kiểm tra" name="finance_review" domain="[('trang_thai', '=', 'finance_review')]"/>
+                    <filter string="Đã duyệt" name="approved" domain="[('trang_thai', '=', 'approved')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_de_nghi_mua_sam" model="ir.actions.act_window">
+            <field name="name">Đề nghị mua sắm</field>
+            <field name="res_model">de_nghi_mua_sam</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_de_nghi_mua_sam_search"/>
+        </record>
+    </data>
+</odoo>

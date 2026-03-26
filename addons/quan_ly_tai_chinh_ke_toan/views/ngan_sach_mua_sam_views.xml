@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_ngan_sach_mua_sam_kanban" model="ir.ui.view">
+            <field name="name">ngan_sach_mua_sam.kanban</field>
+            <field name="model">ngan_sach_mua_sam</field>
+            <field name="arch" type="xml">
+                <kanban class="o_finance_kanban">
+                    <field name="ten_ngan_sach"/>
+                    <field name="ma_ngan_sach"/>
+                    <field name="so_tien_duyet"/>
+                    <field name="so_tien_da_dung"/>
+                    <field name="so_tien_con_lai"/>
+                    <field name="trang_thai"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_finance_card o_finance_budget_card">
+                                <div class="o_finance_card__header">
+                                    <strong><field name="ten_ngan_sach"/></strong>
+                                    <span class="badge badge-info"><field name="ma_ngan_sach"/></span>
+                                </div>
+                                <div class="o_finance_card__metrics">
+                                    <div><span>Duyệt</span><strong><field name="so_tien_duyet"/></strong></div>
+                                    <div><span>Đã dùng</span><strong><field name="so_tien_da_dung"/></strong></div>
+                                    <div><span>Còn lại</span><strong><field name="so_tien_con_lai"/></strong></div>
+                                </div>
+                                <div class="o_finance_card__footer">
+                                    <field name="trang_thai" widget="badge"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_ngan_sach_mua_sam_tree" model="ir.ui.view">
+            <field name="name">ngan_sach_mua_sam.tree</field>
+            <field name="model">ngan_sach_mua_sam</field>
+            <field name="arch" type="xml">
+                <tree string="Ngân sách mua sắm">
+                    <field name="ma_ngan_sach"/>
+                    <field name="ten_ngan_sach"/>
+                    <field name="nam_ngan_sach"/>
+                    <field name="so_tien_duyet"/>
+                    <field name="so_tien_da_dung"/>
+                    <field name="so_tien_con_lai"/>
+                    <field name="trang_thai"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_ngan_sach_mua_sam_form" model="ir.ui.view">
+            <field name="name">ngan_sach_mua_sam.form</field>
+            <field name="model">ngan_sach_mua_sam</field>
+            <field name="arch" type="xml">
+                <form string="Ngân sách mua sắm">
+                    <header>
+                        <button name="action_open" type="object" string="Mở ngân sách" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"/>
+                        <button name="action_close" type="object" string="Khóa ngân sách" attrs="{'invisible': [('trang_thai', '=', 'closed')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="draft,open,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_de_nghi" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                                <field name="so_de_nghi" widget="statinfo" string="Đề nghị"/>
+                            </button>
+                        </div>
+                        <div class="o_form_title">
+                            <h1><field name="ten_ngan_sach" placeholder="Tên ngân sách"/></h1>
+                            <div class="text-muted"><field name="ma_ngan_sach" readonly="1"/></div>
+                        </div>
+                        <group>
+                            <group string="Thông tin ngân sách">
+                                <field name="nam_ngan_sach"/>
+                                <field name="currency_id"/>
+                                <field name="so_tien_duyet"/>
+                                <field name="so_tien_da_dung" readonly="1"/>
+                                <field name="so_tien_con_lai" readonly="1"/>
+                            </group>
+                            <group string="Ghi chú">
+                                <field name="mo_ta" nolabel="1" placeholder="Mô tả phạm vi chi tiêu, nguồn phê duyệt..."/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Đề nghị mua sắm">
+                                <field name="de_nghi_mua_sam_ids" readonly="1">
+                                    <tree>
+                                        <field name="so_de_nghi"/>
+                                        <field name="ngay_de_nghi"/>
+                                        <field name="phong_ban_id"/>
+                                        <field name="du_toan_chi_phi"/>
+                                        <field name="trang_thai"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ngan_sach_mua_sam_search" model="ir.ui.view">
+            <field name="name">ngan_sach_mua_sam.search</field>
+            <field name="model">ngan_sach_mua_sam</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ma_ngan_sach"/>
+                    <field name="ten_ngan_sach"/>
+                    <field name="nam_ngan_sach"/>
+                    <filter string="Đang sử dụng" name="open" domain="[('trang_thai', '=', 'open')]"/>
+                    <filter string="Đã khóa" name="closed" domain="[('trang_thai', '=', 'closed')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ngan_sach_mua_sam" model="ir.actions.act_window">
+            <field name="name">Ngân sách mua sắm</field>
+            <field name="res_model">ngan_sach_mua_sam</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="view_ngan_sach_mua_sam_search"/>
+        </record>
+    </data>
+</odoo>
